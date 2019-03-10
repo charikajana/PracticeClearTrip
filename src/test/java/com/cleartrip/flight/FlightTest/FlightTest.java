@@ -13,9 +13,13 @@ public class FlightTest {
 		cleartrip=new ClearTrip();
 	}
 	
-	@Test
+	@Test(enabled = false) 
 	public void searchFlightOnways() {
 		cleartrip.flightscenarios.SearchwithOnewayFlight();
+	}
+	@Test
+	public void SearchRoundTripFlight() {
+		cleartrip.flightscenarios.SearchRoundTripFlight();
 	}
 
 }
