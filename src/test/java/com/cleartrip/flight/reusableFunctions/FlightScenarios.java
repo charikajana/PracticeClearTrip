@@ -35,6 +35,24 @@ public class FlightScenarios {
 		webDriverIntialization.implecitwait();
 		webDriverIntialization.click("com.cleartrip.flight.oneway.SearchBtn");	
 	}
+	public void SearchMulticityFlight() {		
+		webDriverIntialization.click("com.cleartrip.flight.multicity.radioButton");	
+		webDriverIntialization.implecitwait();
+		webDriverIntialization.Send_Keys("com.cleartrip.flight.multicity.FromTag1", "Bangalore, IN - Kempegowda International Airport (BLR)");			
+		webDriverIntialization.Send_Keys("com.cleartrip.flight.multicity.ToTag1", "Hyderabad, IN - Rajiv Gandhi International (HYD)");
+		webDriverIntialization.click("com.cleartrip.flight.multicity.DepartDate1");	
+		webDriverIntialization.ExlicitWait("com.cleartrip.flight.multicity.CalenderDate1");
+		webDriverIntialization.click("com.cleartrip.flight.multicity.CalenderDate1");
+		webDriverIntialization.implecitwait();
+		webDriverIntialization.Send_Keys("com.cleartrip.flight.multicity.FromTag2","Hyderabad, IN - Rajiv Gandhi International (HYD)"); 		
+		webDriverIntialization.Send_Keys("com.cleartrip.flight.multicity.ToTag2", "Visakhapatnam, IN - Vishakhapatnam (VTZ)");
+		webDriverIntialization.click("com.cleartrip.flight.multicity.DepartDate2");	
+		webDriverIntialization.ExlicitWait("com.cleartrip.flight.multicity.CalenderDate2");
+		webDriverIntialization.click("com.cleartrip.flight.multicity.CalenderDate2");
+		webDriverIntialization.implecitwait();
+		webDriverIntialization.click("com.cleartrip.flight.oneway.SearchBtn");	
+	}
+	
 	
 	
 
