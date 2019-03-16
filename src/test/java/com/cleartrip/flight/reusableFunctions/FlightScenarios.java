@@ -1,6 +1,11 @@
 package com.cleartrip.flight.reusableFunctions;
 
 
+import java.io.IOException;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
+import com.cleartrip.reportsutil.ReportsSetup;
 import com.cleartrip.webdriverintractions.WebDriverIntialization;
 
 public class FlightScenarios {
@@ -9,18 +14,20 @@ public class FlightScenarios {
 		webDriverIntialization=new WebDriverIntialization();
 	}
 	
-	public void SearchwithOnewayFlight() {		
+	public void SearchwithOnewayFlight() throws IOException {		
 		webDriverIntialization.click("com.cleartrip.flight.oneway.radioButton");	
-		webDriverIntialization.implecitwait();
-		webDriverIntialization.Send_Keys("com.cleartrip.flight.oneway.FromTag", "Bangalore, IN - Kempegowda International Airport (BLR)");			
+		webDriverIntialization.implecitwait();		
+		webDriverIntialization.Send_Keys("com.cleartrip.flight.oneway.FromTag", "Bangalore, IN - Kempegowda International Airport (BLR)");		
 		webDriverIntialization.Send_Keys("com.cleartrip.flight.oneway.ToTag", "Hyderabad, IN - Rajiv Gandhi International (HYD)");
 		webDriverIntialization.click("com.cleartrip.flight.oneway.DepartDate");	
 		webDriverIntialization.ExlicitWait("com.cleartrip.flight.oneway.CalenderDate");
 		webDriverIntialization.click("com.cleartrip.flight.oneway.CalenderDate");
 		webDriverIntialization.implecitwait();
-		webDriverIntialization.click("com.cleartrip.flight.oneway.SearchBtn");	
+		webDriverIntialization.click("com.cleartrip.flight.oneway.SearchBtn");
+		ReportsSetup.test.log(Status.INFO, "" ,MediaEntityBuilder.createScreenCaptureFromPath(webDriverIntialization.getScreenshot().toString()).build());			
+		
 	}
-	public void SearchRoundTripFlight() {		
+	public void SearchRoundTripFlight() throws IOException {		
 		webDriverIntialization.click("com.cleartrip.flight.roundtrip.radioButton");	
 		webDriverIntialization.implecitwait();
 		webDriverIntialization.Send_Keys("com.cleartrip.flight.roundtrip.FromTag", "Bangalore, IN - Kempegowda International Airport (BLR)");			
@@ -33,9 +40,11 @@ public class FlightScenarios {
 		webDriverIntialization.ExlicitWait("com.cleartrip.flight.roundtrip.ReturnCalenderDate");
 		webDriverIntialization.click("com.cleartrip.flight.roundtrip.ReturnCalenderDate");
 		webDriverIntialization.implecitwait();
-		webDriverIntialization.click("com.cleartrip.flight.oneway.SearchBtn");	
+		webDriverIntialization.click("com.cleartrip.flight.oneway.SearchBtn");
+		ReportsSetup.test.log(Status.INFO, "" ,MediaEntityBuilder.createScreenCaptureFromPath(webDriverIntialization.getScreenshot().toString()).build());			
+		
 	}
-	public void SearchMulticityFlight() {		
+	public void SearchMulticityFlight() throws IOException {		
 		webDriverIntialization.click("com.cleartrip.flight.multicity.radioButton");	
 		webDriverIntialization.implecitwait();
 		webDriverIntialization.Send_Keys("com.cleartrip.flight.multicity.FromTag1", "Bangalore, IN - Kempegowda International Airport (BLR)");			
@@ -50,7 +59,9 @@ public class FlightScenarios {
 		webDriverIntialization.ExlicitWait("com.cleartrip.flight.multicity.CalenderDate2");
 		webDriverIntialization.click("com.cleartrip.flight.multicity.CalenderDate2");
 		webDriverIntialization.implecitwait();
-		webDriverIntialization.click("com.cleartrip.flight.oneway.SearchBtn");	
+		webDriverIntialization.click("com.cleartrip.flight.oneway.SearchBtn");
+		ReportsSetup.test.log(Status.INFO, "" ,MediaEntityBuilder.createScreenCaptureFromPath(webDriverIntialization.getScreenshot().toString()).build());			
+		
 	}
 	
 	

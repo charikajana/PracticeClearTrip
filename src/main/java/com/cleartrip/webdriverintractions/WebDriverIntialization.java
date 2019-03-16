@@ -1,6 +1,7 @@
 package com.cleartrip.webdriverintractions;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import com.cleartrip.browserutils.BrowserFactory;
 import com.cleartrip.reportsutil.ReportsSetup;
 
@@ -60,10 +63,19 @@ public class WebDriverIntialization {
 		return listofwebElements;
 	}
 	public void click(String key) {
-		try {
+		try {		
+			ReportsSetup.test.log(Status.INFO,"Click on WebElement on ------> "+key);
 			log.info("Click on Webelements is:"+key);
 			Find_Element(key).click();
+			ReportsSetup.test.log(Status.INFO, "" ,MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot().toString()).build());			
+			
 		}catch(Exception e) {
+			ReportsSetup.test.log(Status.FAIL,"Failed to Click on WebElement ------> "+key);
+			try {
+				ReportsSetup.test.log(Status.FAIL, "" ,MediaEntityBuilder.createScreenCaptureFromPath(getScreenshot().toString()).build());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}			
 			log.error(""+e.getMessage());
 			e.printStackTrace();
 		}
@@ -71,23 +83,33 @@ public class WebDriverIntialization {
 	}
 	public void Send_Keys(String key,String inputarg) {
 		try {
+			ReportsSetup.test.log(Status.INFO,"Sendig Test Data ------> "+inputarg);
 			log.info("Sending the input data:"+key);
 			Find_Element(key).sendKeys(inputarg);
 		}catch(Exception e) {
+			ReportsSetup.test.log(Status.FAIL,"Sendig Test Data ------> "+inputarg);
 			log.error(""+e.getMessage());
 		}
 			
 		
 	}
 	public void implecitwait() {
+		ReportsSetup.test.log(Status.INFO,"Waiting for the Implecit wait until 60 Sec");
 		log.info("Wait for the webelement implecitwait :");
 		getCurrentDriver().manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
 	}
 	
 	public void ExlicitWait(String key) {
-		log.info("Wait for the webelement ExlicitWait :"+key);
-		WebDriverWait wait=new WebDriverWait(getCurrentDriver(), 60);
-		wait.until(ExpectedConditions.presenceOfElementLocated(BY.getByObject(key)));
+		try {
+			ReportsSetup.test.log(Status.INFO,"Waiting for the Explicit wait until 60 Sec and looking for the webElement is "+key);
+			log.info("Wait for the webelement ExlicitWait :"+key);
+			WebDriverWait wait=new WebDriverWait(getCurrentDriver(), 60);
+			wait.until(ExpectedConditions.presenceOfElementLocated(BY.getByObject(key)));
+		}catch(Exception e) {
+			ReportsSetup.test.log(Status.FAIL,"WebElement is not present for Explicit wait");
+			e.printStackTrace();
+		}
+		
 		
 	}
 	
@@ -110,12 +132,7 @@ public class WebDriverIntialization {
 		
 		
 	}
-	public static void main(String[] args) {
-		WebDriverIntialization wb=new WebDriverIntialization();
-		wb.getCurrentDriver();
-		ReportsSetup.reportsfileCreation();
-		wb.getScreenshot();
-	}
+
 	
 	
 	
