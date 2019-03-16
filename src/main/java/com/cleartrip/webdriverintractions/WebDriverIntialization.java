@@ -1,15 +1,22 @@
 package com.cleartrip.webdriverintractions;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.cleartrip.browserutils.BrowserFactory;
+import com.cleartrip.reportsutil.ReportsSetup;
 
 public class WebDriverIntialization {
 	WebDriver driver;
@@ -82,6 +89,32 @@ public class WebDriverIntialization {
 		WebDriverWait wait=new WebDriverWait(getCurrentDriver(), 60);
 		wait.until(ExpectedConditions.presenceOfElementLocated(BY.getByObject(key)));
 		
+	}
+	
+	public String getScreenshot() {
+		String pattern = "HH:MM:ss.S";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String date = simpleDateFormat.format(new Date());
+		simpleDateFormat = new SimpleDateFormat(pattern);
+		String timeStamp = simpleDateFormat.format(new Date());
+		timeStamp=timeStamp.replaceAll(":","_").replace(".","");
+		File desitnation=new File (ReportsSetup.ScreenShotspath+"//"+timeStamp+".jpg");
+		String currentScreenshotpath=desitnation.getAbsolutePath();
+		try {
+			File src=((TakesScreenshot)getCurrentDriver()).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(src,desitnation);	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return currentScreenshotpath;
+		
+		
+	}
+	public static void main(String[] args) {
+		WebDriverIntialization wb=new WebDriverIntialization();
+		wb.getCurrentDriver();
+		ReportsSetup.reportsfileCreation();
+		wb.getScreenshot();
 	}
 	
 	
